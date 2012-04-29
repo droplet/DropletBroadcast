@@ -1,0 +1,8 @@
+name: DropletAlert
+version: ${buildNumber}
+description: Alert "Droplet" plugin for the Spout server featuring configurable alert messages and repeat intervals. GUI features to come!
+author: SpoutDev
+website: http://www.spout.org
+
+main: org.spout.droplet.DropletAlert
+platform: SERVER
