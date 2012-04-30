@@ -41,7 +41,7 @@ import org.spout.droplet.command.DropletCommand;
 import org.spout.droplet.config.DropletConfig;
 
 public class DropletAlertPlugin extends CommonPlugin {
-	private static DropletConfig config;
+	private DropletConfig config;
 	private Engine game;
 
 	@Override
@@ -49,7 +49,7 @@ public class DropletAlertPlugin extends CommonPlugin {
 		try {
 			config.save();
 		} catch (ConfigurationException e) {
-			getLogger().log(Level.WARNING, "Error saving DropletAlertPlugin configuration: ", e);
+			getLogger().log(Level.WARNING, "Error saving DropletAlert configuration: ", e);
 		}
 		Spout.getEngine().getScheduler().cancelTasks(this);
 		getLogger().log(Level.INFO, "disabled");
@@ -62,7 +62,7 @@ public class DropletAlertPlugin extends CommonPlugin {
 		try {
 			config.load();
 		} catch (ConfigurationException e) {
-			getLogger().log(Level.WARNING, "Error loading DropletAlertPlugin configuration: ", e);
+			getLogger().log(Level.WARNING, "Error loading DropletAlert configuration: ", e);
 		}
 
 		//Register commands
@@ -92,7 +92,7 @@ public class DropletAlertPlugin extends CommonPlugin {
 		getLogger().log(Level.INFO, "loaded");
 	}
 
-	public static DropletConfig getConfig() {
+	public DropletConfig getConfig() {
 		return config;
 	}
 }

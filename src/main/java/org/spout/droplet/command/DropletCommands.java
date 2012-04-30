@@ -50,19 +50,20 @@ public class DropletCommands {
 	public void reload(CommandContext args, CommandSource source) throws CommandException {
 		//load the config again.
 		try {
-			DropletAlertPlugin.getConfig().load();
+			plugin.getConfig().load();
 		} catch (ConfigurationException e) {
 			Spout.getLogger().log(Level.WARNING, "Error saving DropletAlertPlugin configuration: ", e);
 		}
 	}
 
-	@Command(aliases = {"addmessage", "addm"}, usage = "/droplet addmessage|addm <message>", desc = "Add a new message to show to players.")
+	@Command(aliases = {"addmessage", "addm"}, usage = "<message>", desc = "Add a new message to show to players.")
 	@CommandPermissions("droplet.command.addmessage")
 	public void addmessage(CommandContext args, CommandSource source) {
 		String message = args.getString(0);
 		//Make sure we don't add the same message twice...
 		for (String s : DropletConfig.MESSAGES.getStringList()) {
 			if (s.equalsIgnoreCase(message)) {
+				source.sendMessage("\"" + message + "\" has already been added.");
 				break;
 			}
 		}
@@ -71,7 +72,7 @@ public class DropletCommands {
 		source.sendMessage("\"" + message + "\" was added to the messages list.");
 	}
 
-	@Command(aliases = {"removemessage", "remme"}, usage = "/droplet addmessage|addm <message>", desc = "Add a new message to show to players.")
+	@Command(aliases = {"removemessage", "remme"}, usage = "<message>", desc = "Removes a message from the messages available.")
 	@CommandPermissions("droplet.command.removemessage")
 	public void removemessage(CommandContext args, CommandSource source) {
 		String message = args.getString(0);
