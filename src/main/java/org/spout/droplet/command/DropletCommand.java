@@ -23,32 +23,26 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.droplet;
+package org.spout.droplet.command;
 
-import java.io.File;
-import java.util.Arrays;
+import org.spout.api.command.CommandContext;
+import org.spout.api.command.CommandSource;
+import org.spout.api.command.annotated.Command;
+import org.spout.api.command.annotated.NestedCommand;
+import org.spout.api.exception.CommandException;
 
-import org.spout.api.exception.ConfigurationException;
-import org.spout.api.util.config.ConfigurationHolder;
-import org.spout.api.util.config.ConfigurationHolderConfiguration;
-import org.spout.api.util.config.yaml.YamlConfiguration;
+import org.spout.droplet.DropletAlertPlugin;
 
-public class DropletConfig extends ConfigurationHolderConfiguration {
-	public static final ConfigurationHolder DELAY = new ConfigurationHolder(20, "general", "initial-delay");
-	public static final ConfigurationHolder REPEAT = new ConfigurationHolder(600, "general", "seconds-till-repeat");
-	public static final ConfigurationHolder MESSAGES = new ConfigurationHolder(Arrays.asList("This is a Spout-powered server!"), "general", "messages");
-	private static File file;
+public class DropletCommand {
+	private final DropletAlertPlugin plugin;
 
-	public DropletConfig(File dataFolder) {
-		super(new YamlConfiguration(new File(dataFolder, "config.yml")));
-		file = new File(dataFolder, "config.yml");
+	public DropletCommand(DropletAlertPlugin instance) {
+		plugin = instance;
 	}
 
-	@Override
-	public void load() throws ConfigurationException {
-		if (!file.exists()) {
-			super.save();
-		}
-		super.load();
+	@Command(aliases = {"droplet"}, usage = "", desc = "Access droplet commands", min = 1, max = 1)
+	@NestedCommand(DropletCommands.class)
+	public void droplet(CommandContext args, CommandSource source) throws CommandException {
+		//Droplet does nothing
 	}
 }
