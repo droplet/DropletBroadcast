@@ -33,14 +33,25 @@ import org.spout.api.exception.CommandException;
 
 import org.spout.droplet.DropletAlertPlugin;
 
+/**
+ * This is our parent command (the first one in the sequence of commands)
+ *
+ * Equates to: /droplet
+ */
 public class DropletCommand {
 	private final DropletAlertPlugin plugin;
 
+	/**
+	 * We must pass in an instance of our plugin's object for the annotation to register under the factory.
+	 * @param instance
+	 */
 	public DropletCommand(DropletAlertPlugin instance) {
 		plugin = instance;
 	}
 
+	//This is the command. Will detail all the options later.
 	@Command(aliases = {"droplet"}, usage = "", desc = "Access droplet commands", min = 1, max = 1)
+	//This is the class with all subcommands under /droplet
 	@NestedCommand(DropletCommands.class)
 	public void droplet(CommandContext args, CommandSource source) throws CommandException {
 		//Droplet does nothing

@@ -27,6 +27,7 @@ package org.spout.droplet;
 
 import java.util.logging.Level;
 
+import org.spout.api.ChatColor;
 import org.spout.api.Engine;
 import org.spout.api.Spout;
 import org.spout.api.command.CommandRegistrationsFactory;
@@ -82,7 +83,8 @@ public class DropletAlertPlugin extends CommonPlugin {
 					}
 				}
 			}
-		}, DropletConfig.DELAY.getLong(), DropletConfig.REPEAT.getLong());
+		}, DropletConfig.DELAY.getLong() * 20, DropletConfig.REPEAT.getLong() * 20);
+
 		getLogger().log(Level.INFO, "b" + getDescription().getVersion() + " enabled");
 	}
 

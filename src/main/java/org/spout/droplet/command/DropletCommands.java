@@ -38,6 +38,11 @@ import org.spout.api.exception.ConfigurationException;
 import org.spout.droplet.DropletAlertPlugin;
 import org.spout.droplet.config.DropletConfig;
 
+/**
+ * All subcommands go in this class.
+ *
+ * Equates to /droplet reload or /droplet addmessage
+ */
 public class DropletCommands {
 	private final DropletAlertPlugin plugin;
 
