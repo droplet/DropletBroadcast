@@ -37,6 +37,7 @@ import org.spout.api.command.annotated.SimpleInjector;
 import org.spout.api.exception.ConfigurationException;
 import org.spout.api.player.Player;
 import org.spout.api.plugin.CommonPlugin;
+import org.spout.api.scheduler.TaskPriority;
 
 import org.spout.droplet.command.DropletCommand;
 import org.spout.droplet.config.DropletConfig;
@@ -83,7 +84,7 @@ public class DropletAlertPlugin extends CommonPlugin {
 					}
 				}
 			}
-		}, DropletConfig.DELAY.getLong() * 20, DropletConfig.REPEAT.getLong() * 20);
+		}, DropletConfig.DELAY.getLong() * 20, DropletConfig.REPEAT.getLong() * 20, TaskPriority.LOW);
 
 		getLogger().log(Level.INFO, "b" + getDescription().getVersion() + " enabled");
 	}
