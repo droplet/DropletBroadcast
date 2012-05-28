@@ -1,25 +1,19 @@
-<!--
-	Maven build file for DropletAlert
-
-	Copyright (c) 2011-2012 SpoutDev <http://www.spout.org>
-	DropletAlert is licensed under GNU LESSER GENERAL PUBLIC LICENSE Version 3, but with a provision that files are released under the MIT license 180 days after they are published. Please see the `LICENSE.txt` file for details.
--->
-
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<!-- Project information -->
+	<name>DropletAlert</name>
 	<groupId>org.spout.droplet</groupId>
 	<artifactId>dropletalert</artifactId>
 	<version>dev-SNAPSHOT</version>
-	<name>DropletAlert</name>
 	<url>http://www.spout.org</url>
-	<description>Alert "Droplet" plugin for the Spout server featuring configurable alert messages and repeat intervals. GUI features to come!</description>
+	<inceptionYear>2012</inceptionYear>
+	<description>Sponsor "Droplet" plugin for the Spout platform, featuring customizable sponsor messages at set intervals.</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spoutVersion>dev-SNAPSHOT</spoutVersion>
-		<buildNumber>Unknown</buildNumber>
+		<buildNumber>0</buildNumber>
 	</properties>
 
 	<!-- License -->
@@ -28,21 +22,28 @@
 			<name>SpoutDev License Version 1</name>
 			<url>http://www.spout.org/SpoutDevLicenseV1.txt</url>
 			<distribution>repo</distribution>
+			<comments>GNU LESSER GENERAL PUBLIC LICENSE Version 3, but with a provision that files are released under the MIT license 180 days after they are published</comments>
 		</license>
 	</licenses>
 
 	<!-- Source code -->
 	<scm>
-		<developerConnection>scm:git:git@github.com:SpoutDev/${project.name}.git</developerConnection>
-		<connection>scm:git:git://github.com/SpoutDev/${project.name}.git</connection>
-		<url>https://github.com/SpoutDev/${project.name}</url>
+		<developerConnection>scm:git:git@github.com:SpoutDev/DropletAlert.git</developerConnection>
+		<connection>scm:git:git://github.com/SpoutDev/DropletAlert.git</connection>
+		<url>https://github.com/SpoutDev/DropletAlert</url>
 	</scm>
 
 	<!-- Continuous integration -->
 	<ciManagement>
 		<system>jenkins</system>
-		<url>http://ci.spout.org</url>
+		<url>http://build.spout.org</url>
 	</ciManagement>
+
+	<!-- Issue management -->
+	<issueManagement>
+		<system>JIRA</system>
+		<url>http://issues.spout.org</url>
+	</issueManagement>
 
 	<!-- Repository locations -->
 	<repositories>
@@ -50,7 +51,13 @@
 			<id>spout-repo</id>
 			<url>http://repo.spout.org</url>
 		</repository>
-	</repositories> 
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>spout-plugins</id>
+			<url>http://repo.spout.org</url>
+		</pluginRepository>
+	</pluginRepositories>
 
 	<!-- Dependencies -->
 	<dependencies>
@@ -61,10 +68,10 @@
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
-   
+
+	<!-- Build settings -->
 	<build>
 		<defaultGoal>clean package</defaultGoal>
-		<sourceDirectory>${basedir}/src/main/java</sourceDirectory>
 		<!-- Resources -->
 		<resources>
 			<resource>
@@ -80,17 +87,55 @@
 				<filtering>true</filtering>
 				<directory>${basedir}/src/main/resources</directory>
 				<includes>
-					<include>spoutplugin.yml</include>
+					<include>*.yml</include>
 				</includes>
 			</resource>
 		</resources>
 		<!-- Plugins -->
 		<plugins>
+			<!-- License header formatting plugin -->
+			<plugin>
+				<groupId>com.mycila.maven-license-plugin</groupId>
+				<artifactId>maven-license-plugin</artifactId>
+				<version>1.10.b1</version>
+				<executions>
+					<execution>
+						<phase>clean</phase>
+						<goals>
+							<goal>format</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<quiet>true</quiet>
+					<encoding>UTF-8</encoding>
+					<strictCheck>true</strictCheck>
+					<header>${basedir}/HEADER.txt</header>
+					<keywords>
+						<keyword>${project.name}</keyword>
+						<keyword>license</keyword>
+					</keywords>
+					<mapping>
+						<java>SLASHSTAR_STYLE</java>
+					</mapping>
+					<properties>
+						<name>${project.name}</name>
+						<url>${project.url}</url>
+						<license>SpoutDev License Version 1</license>
+						<licenseUrl>http://www.spout.org/SpoutDevLicenseV1.txt</licenseUrl>
+						<copyright>Copyright (c) ${project.inceptionYear}, SpoutDev</copyright>
+					</properties>
+					<includes>
+						<include>src/main/java/**</include>
+						<include>src/test/java/**</include>
+					</includes>
+				</configuration>
+			</plugin>
 			<!-- Compile plugin -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
+				<version>2.4</version>
 				<configuration>
 					<source>1.6</source>
 					<target>1.6</target>

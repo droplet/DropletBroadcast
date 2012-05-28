@@ -1,6 +1,7 @@
 /*
- * This file is part of DropletAlert (http://www.spout.org/).
+ * This file is part of DropletAlert.
  *
+ * Copyright (c) 2012, SpoutDev <http://www.spout.org/>
  * DropletAlert is licensed under the SpoutDev License Version 1.
  *
  * DropletAlert is free software: you can redistribute it and/or modify
