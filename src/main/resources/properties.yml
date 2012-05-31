@@ -4,5 +4,5 @@ description: Alert "Droplet" plugin for the Spout server featuring configurable 
 author: SpoutDev
 website: http://www.spout.org
 
-main: org.spout.droplet.DropletAlert
+main: org.spout.droplet.DropletAlertPlugin
 platform: SERVER
