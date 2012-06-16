@@ -28,7 +28,6 @@ package org.spout.droplet;
 
 import java.util.logging.Level;
 
-import org.spout.api.ChatColor;
 import org.spout.api.Engine;
 import org.spout.api.Spout;
 import org.spout.api.command.CommandRegistrationsFactory;
@@ -45,7 +44,7 @@ import org.spout.droplet.config.DropletConfig;
 
 public class DropletAlertPlugin extends CommonPlugin {
 	private DropletConfig config;
-	private Engine game;
+	private Engine engine;
 
 	@Override
 	public void onDisable() {
@@ -60,7 +59,7 @@ public class DropletAlertPlugin extends CommonPlugin {
 
 	@Override
 	public void onEnable() {
-		game = Spout.getEngine();
+		engine = getEngine();
 
 		try {
 			config.load();
@@ -70,16 +69,16 @@ public class DropletAlertPlugin extends CommonPlugin {
 
 		//Register commands
 		CommandRegistrationsFactory<Class<?>> commandRegFactory = new AnnotatedCommandRegistrationFactory(new SimpleInjector(this), new SimpleAnnotatedCommandExecutorFactory());
-		game.getRootCommand().addSubCommands(this, DropletCommand.class, commandRegFactory);
+		engine.getRootCommand().addSubCommands(this, DropletCommand.class, commandRegFactory);
 
-		game.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+		engine.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
 			@Override
 			public void run() {
 				//Do not run the task if no players are online or they are no messages.
-				if (DropletConfig.MESSAGES.getStringList().size() == 0 || game.getOnlinePlayers().length == 0) {
+				if (DropletConfig.MESSAGES.getStringList().size() == 0 || engine.getOnlinePlayers().length == 0) {
 					return;
 				}
-				for (Player plr : game.getOnlinePlayers()) {
+				for (Player plr : engine.getOnlinePlayers()) {
 					for (String str : DropletConfig.MESSAGES.getStringList()) {
 						plr.sendMessage(str);
 					}
