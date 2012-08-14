@@ -28,14 +28,12 @@ package org.spout.droplet;
 
 import java.util.logging.Level;
 
-import org.spout.api.Engine;
-import org.spout.api.Spout;
 import org.spout.api.command.CommandRegistrationsFactory;
 import org.spout.api.command.annotated.AnnotatedCommandRegistrationFactory;
 import org.spout.api.command.annotated.SimpleAnnotatedCommandExecutorFactory;
 import org.spout.api.command.annotated.SimpleInjector;
+import org.spout.api.entity.Player;
 import org.spout.api.exception.ConfigurationException;
-import org.spout.api.player.Player;
 import org.spout.api.plugin.CommonPlugin;
 import org.spout.api.scheduler.TaskPriority;
 
@@ -44,23 +42,15 @@ import org.spout.droplet.config.DropletConfig;
 
 public class DropletAlertPlugin extends CommonPlugin {
 	private DropletConfig config;
-	private Engine engine;
 
 	@Override
 	public void onDisable() {
-		try {
-			config.save();
-		} catch (ConfigurationException e) {
-			getLogger().log(Level.WARNING, "Error saving DropletAlert configuration: ", e);
-		}
-		Spout.getEngine().getScheduler().cancelTasks(this);
+		getEngine().getScheduler().cancelTasks(this);
 		getLogger().log(Level.INFO, "disabled");
 	}
 
 	@Override
 	public void onEnable() {
-		engine = getEngine();
-
 		try {
 			config.load();
 		} catch (ConfigurationException e) {
@@ -69,16 +59,17 @@ public class DropletAlertPlugin extends CommonPlugin {
 
 		//Register commands
 		CommandRegistrationsFactory<Class<?>> commandRegFactory = new AnnotatedCommandRegistrationFactory(new SimpleInjector(this), new SimpleAnnotatedCommandExecutorFactory());
-		engine.getRootCommand().addSubCommands(this, DropletCommand.class, commandRegFactory);
+		getEngine().getRootCommand().addSubCommands(this, DropletCommand.class, commandRegFactory);
 
-		engine.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+		getEngine().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
 			@Override
 			public void run() {
+				Player[] onlinePlayers = getEngine().getOnlinePlayers();
 				//Do not run the task if no players are online or they are no messages.
-				if (DropletConfig.MESSAGES.getStringList().size() == 0 || engine.getOnlinePlayers().length == 0) {
+				if (DropletConfig.MESSAGES.getStringList().size() == 0 || getEngine().getOnlinePlayers().length == 0) {
 					return;
 				}
-				for (Player plr : engine.getOnlinePlayers()) {
+				for (Player plr : onlinePlayers) {
 					for (String str : DropletConfig.MESSAGES.getStringList()) {
 						plr.sendMessage(str);
 					}
@@ -92,7 +83,6 @@ public class DropletAlertPlugin extends CommonPlugin {
 	@Override
 	public void onLoad() {
 		config = new DropletConfig(getDataFolder());
-		getLogger().log(Level.INFO, "loaded");
 	}
 
 	public DropletConfig getConfig() {
