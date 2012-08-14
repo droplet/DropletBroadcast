@@ -28,6 +28,7 @@ package org.spout.droplet;
 
 import java.util.logging.Level;
 
+import org.spout.api.chat.ChatArguments;
 import org.spout.api.command.CommandRegistrationsFactory;
 import org.spout.api.command.annotated.AnnotatedCommandRegistrationFactory;
 import org.spout.api.command.annotated.SimpleAnnotatedCommandExecutorFactory;
@@ -71,7 +72,7 @@ public class DropletAlertPlugin extends CommonPlugin {
 				}
 				for (Player plr : onlinePlayers) {
 					for (String str : DropletConfig.MESSAGES.getStringList()) {
-						plr.sendMessage(str);
+						plr.sendMessage(new ChatArguments(str));
 					}
 				}
 			}

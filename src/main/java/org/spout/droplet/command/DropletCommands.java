@@ -29,6 +29,7 @@ package org.spout.droplet.command;
 import java.util.logging.Level;
 
 import org.spout.api.Spout;
+import org.spout.api.chat.ChatArguments;
 import org.spout.api.command.CommandContext;
 import org.spout.api.command.CommandSource;
 import org.spout.api.command.annotated.Command;
@@ -66,31 +67,33 @@ public class DropletCommands {
 	@CommandPermissions("droplet.command.addmessage")
 	public void addmessage(CommandContext args, CommandSource source) {
 		String message = args.getString(0);
+		ChatArguments chat = ChatArguments.fromString(message);
 		//Make sure we don't add the same message twice...
 		for (String s : DropletConfig.MESSAGES.getStringList()) {
 			if (s.equalsIgnoreCase(message)) {
-				source.sendMessage("\"" + message + "\" has already been added.");
+				source.sendMessage(new ChatArguments("\"", chat, "\" has already been added."));
 				break;
 			}
 		}
 
 		DropletConfig.MESSAGES.getStringList().add(message);
-		source.sendMessage("\"" + message + "\" was added to the messages list.");
+		source.sendMessage(new ChatArguments("\"", chat, "\" was added to the messages list."));
 	}
 
 	@Command(aliases = {"removemessage", "remme"}, usage = "<message>", desc = "Removes a message from the messages available.")
 	@CommandPermissions("droplet.command.removemessage")
 	public void removemessage(CommandContext args, CommandSource source) {
 		String message = args.getString(0);
+		ChatArguments chat = ChatArguments.fromString(message);
 		//Search for the message to be removed.
 		for (String s : DropletConfig.MESSAGES.getStringList()) {
 			if (s.equalsIgnoreCase(message)) {
 				DropletConfig.MESSAGES.getStringList().remove(message);
-				source.sendMessage("\"" + message + "\" was removed from the messages list.");
+				source.sendMessage(new ChatArguments("\"", chat, "\" was removed from the messages list."));
 				return;
 			}
 		}
 		//No messages found :'(
-		source.sendMessage("\"" + message + "\" was not found in the messages list!");
+		source.sendMessage(new ChatArguments("\"", chat, "\" was not found in the messages list!"));
 	}
 }
