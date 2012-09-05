@@ -28,6 +28,7 @@ package org.spout.droplet;
 
 import java.util.logging.Level;
 
+import org.spout.api.Server;
 import org.spout.api.chat.ChatArguments;
 import org.spout.api.command.CommandRegistrationsFactory;
 import org.spout.api.command.annotated.AnnotatedCommandRegistrationFactory;
@@ -65,9 +66,9 @@ public class DropletAlertPlugin extends CommonPlugin {
 		getEngine().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
 			@Override
 			public void run() {
-				Player[] onlinePlayers = getEngine().getOnlinePlayers();
+				Player[] onlinePlayers = ((Server) getEngine()).getOnlinePlayers();
 				//Do not run the task if no players are online or they are no messages.
-				if (DropletConfig.MESSAGES.getStringList().size() == 0 || getEngine().getOnlinePlayers().length == 0) {
+				if (DropletConfig.MESSAGES.getStringList().size() == 0 || onlinePlayers.length == 0) {
 					return;
 				}
 				for (Player plr : onlinePlayers) {
