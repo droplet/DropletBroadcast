@@ -44,10 +44,11 @@ import org.spout.droplet.config.DropletConfig;
 
 public class DropletAlertPlugin extends CommonPlugin {
 	private DropletConfig config;
+	private Server server;
 
 	@Override
 	public void onDisable() {
-		getEngine().getScheduler().cancelTasks(this);
+		server.getScheduler().cancelTasks(this);
 		getLogger().log(Level.INFO, "disabled");
 	}
 
@@ -61,12 +62,12 @@ public class DropletAlertPlugin extends CommonPlugin {
 
 		//Register commands
 		CommandRegistrationsFactory<Class<?>> commandRegFactory = new AnnotatedCommandRegistrationFactory(new SimpleInjector(this), new SimpleAnnotatedCommandExecutorFactory());
-		getEngine().getRootCommand().addSubCommands(this, DropletCommand.class, commandRegFactory);
+		server.getRootCommand().addSubCommands(this, DropletCommand.class, commandRegFactory);
 
-		getEngine().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+		server.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
 			@Override
 			public void run() {
-				Player[] onlinePlayers = ((Server) getEngine()).getOnlinePlayers();
+				Player[] onlinePlayers = server.getOnlinePlayers();
 				//Do not run the task if no players are online or they are no messages.
 				if (DropletConfig.MESSAGES.getStringList().size() == 0 || onlinePlayers.length == 0) {
 					return;
@@ -84,6 +85,7 @@ public class DropletAlertPlugin extends CommonPlugin {
 
 	@Override
 	public void onLoad() {
+		server = (Server) getEngine();
 		config = new DropletConfig(getDataFolder());
 	}
 
