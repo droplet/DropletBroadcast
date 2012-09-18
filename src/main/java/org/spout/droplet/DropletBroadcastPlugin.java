@@ -42,7 +42,7 @@ import org.spout.api.scheduler.TaskPriority;
 import org.spout.droplet.command.DropletCommand;
 import org.spout.droplet.config.DropletConfig;
 
-public class DropletAlertPlugin extends CommonPlugin {
+public class DropletBroadcastPlugin extends CommonPlugin {
 	private DropletConfig config;
 	private Server server;
 
@@ -57,7 +57,7 @@ public class DropletAlertPlugin extends CommonPlugin {
 		try {
 			config.load();
 		} catch (ConfigurationException e) {
-			getLogger().log(Level.WARNING, "Error loading DropletAlert configuration: ", e);
+			getLogger().log(Level.WARNING, "Error loading DropletBroadcast configuration: ", e);
 		}
 
 		//Register commands

@@ -37,18 +37,18 @@ import org.spout.api.command.annotated.CommandPermissions;
 import org.spout.api.exception.CommandException;
 import org.spout.api.exception.ConfigurationException;
 
-import org.spout.droplet.DropletAlertPlugin;
+import org.spout.droplet.DropletBroadcastPlugin;
 import org.spout.droplet.config.DropletConfig;
 
 /**
  * All subcommands go in this class.
- *
+ * <p/>
  * Equates to /droplet reload or /droplet addmessage
  */
 public class DropletCommands {
-	private final DropletAlertPlugin plugin;
+	private final DropletBroadcastPlugin plugin;
 
-	public DropletCommands(DropletAlertPlugin instance) {
+	public DropletCommands(DropletBroadcastPlugin instance) {
 		plugin = instance;
 	}
 
@@ -59,7 +59,7 @@ public class DropletCommands {
 		try {
 			plugin.getConfig().load();
 		} catch (ConfigurationException e) {
-			Spout.getLogger().log(Level.WARNING, "Error saving DropletAlertPlugin configuration: ", e);
+			Spout.getLogger().log(Level.WARNING, "Error saving DropletBroadcastPlugin configuration: ", e);
 		}
 	}
 

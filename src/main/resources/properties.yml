@@ -1,8 +1,8 @@
-name: DropletAlert
+name: DropletBroadcast
 version: ${buildNumber}
-description: Alert "Droplet" plugin for the Spout server featuring configurable alert messages and repeat intervals. GUI features to come!
+description: Sponsor "Droplet" plugin for the Spout platform, featuring customizable sponsor messages at set intervals.
 author: SpoutDev
 website: http://www.spout.org
 
-main: org.spout.droplet.DropletAlertPlugin
+main: org.spout.droplet.DropletBroadcastPlugin
 platform: SERVER

@@ -2,9 +2,9 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<!-- Project information -->
-	<name>DropletAlert</name>
+	<name>DropletBroadcast</name>
 	<groupId>org.spout.droplet</groupId>
-	<artifactId>dropletalert</artifactId>
+	<artifactId>dropletbroadcast</artifactId>
 	<version>dev-SNAPSHOT</version>
 	<url>http://www.spout.org</url>
 	<inceptionYear>2012</inceptionYear>
@@ -28,9 +28,9 @@
 
 	<!-- Source code -->
 	<scm>
-		<developerConnection>scm:git:git@github.com:SpoutDev/DropletAlert.git</developerConnection>
-		<connection>scm:git:git://github.com/SpoutDev/DropletAlert.git</connection>
-		<url>https://github.com/SpoutDev/DropletAlert</url>
+		<developerConnection>scm:git:git@github.com:SpoutDev/DropletBroadcast.git</developerConnection>
+		<connection>scm:git:git://github.com/SpoutDev/DropletBroadcast.git</connection>
+		<url>https://github.com/SpoutDev/DropletBroadcast</url>
 	</scm>
 
 	<!-- Continuous integration -->

@@ -32,21 +32,21 @@ import org.spout.api.command.annotated.Command;
 import org.spout.api.command.annotated.NestedCommand;
 import org.spout.api.exception.CommandException;
 
-import org.spout.droplet.DropletAlertPlugin;
+import org.spout.droplet.DropletBroadcastPlugin;
 
 /**
  * This is our parent command (the first one in the sequence of commands)
- *
+ * <p/>
  * Equates to: /droplet
  */
 public class DropletCommand {
-	private final DropletAlertPlugin plugin;
+	private final DropletBroadcastPlugin plugin;
 
 	/**
 	 * We must pass in an instance of our plugin's object for the annotation to register under the factory.
 	 * @param instance
 	 */
-	public DropletCommand(DropletAlertPlugin instance) {
+	public DropletCommand(DropletBroadcastPlugin instance) {
 		plugin = instance;
 	}
 
