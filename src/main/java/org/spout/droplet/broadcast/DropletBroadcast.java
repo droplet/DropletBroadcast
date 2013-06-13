@@ -23,16 +23,17 @@
  */
 package org.spout.droplet.broadcast;
 
+import java.util.logging.Level;
+
 import org.spout.api.Server;
 import org.spout.api.command.annotated.AnnotatedCommandExecutorFactory;
 import org.spout.api.entity.Player;
 import org.spout.api.exception.ConfigurationException;
 import org.spout.api.plugin.Plugin;
 import org.spout.api.scheduler.TaskPriority;
+
 import org.spout.droplet.broadcast.command.DropletCommands;
 import org.spout.droplet.broadcast.config.DropletConfig;
-
-import java.util.logging.Level;
 
 public class DropletBroadcast extends Plugin {
 	private DropletConfig config;
@@ -53,9 +54,7 @@ public class DropletBroadcast extends Plugin {
 		}
 
 		// Register commands
-        //CommandRegistrationsFactory<Class<?>> commandRegFactory = new AnnotatedCommandRegistrationFactory(new SimpleInjector(this), new SimpleAnnotatedCommandExecutorFactory());
-		//server.getRootCommand().addSubCommands(this, DropletCommand.class, commandRegFactory);
-        AnnotatedCommandExecutorFactory.create(new DropletCommands(this), engine.getCommandManager().getCommand("droplet"));
+		AnnotatedCommandExecutorFactory.create(new DropletCommands(this), engine.getCommandManager().getCommand("droplet"));
 
 		server.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
 			@Override

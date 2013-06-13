@@ -23,6 +23,8 @@
  */
 package org.spout.droplet.broadcast.command;
 
+import java.util.logging.Level;
+
 import org.spout.api.Spout;
 import org.spout.api.command.CommandArguments;
 import org.spout.api.command.CommandSource;
@@ -30,10 +32,9 @@ import org.spout.api.command.annotated.Command;
 import org.spout.api.command.annotated.Permissible;
 import org.spout.api.exception.CommandException;
 import org.spout.api.exception.ConfigurationException;
+
 import org.spout.droplet.broadcast.DropletBroadcast;
 import org.spout.droplet.broadcast.config.DropletConfig;
-
-import java.util.logging.Level;
 
 /**
  * All subcommands go in this class.
@@ -61,8 +62,7 @@ public class DropletCommands {
 	@Command(aliases = {"addmessage", "addm"}, usage = "<message>", desc = "Add a new message to show to players.")
 	@Permissible("droplet.command.addmessage")
 	public void addmessage(CommandSource source, CommandArguments args) throws CommandException {
-        String message = args.getString(0);
-		//ChatArguments chat = ChatArguments.fromString(message);
+		String message = args.getString(0);
 		// Make sure we don't add the same message twice...
 		for (String s : DropletConfig.MESSAGES.getStringList()) {
 			if (s.equalsIgnoreCase(message)) {
@@ -78,7 +78,7 @@ public class DropletCommands {
 	@Command(aliases = {"removemessage", "remme"}, usage = "<message>", desc = "Removes a message from the messages available.")
 	@Permissible("droplet.command.removemessage")
 	public void removemessage(CommandSource source, CommandArguments args) throws CommandException {
-        String message = args.getString(0);
+		String message = args.getString(0);
 		// Search for the message to be removed.
 		for (String s : DropletConfig.MESSAGES.getStringList()) {
 			if (s.equalsIgnoreCase(message)) {
