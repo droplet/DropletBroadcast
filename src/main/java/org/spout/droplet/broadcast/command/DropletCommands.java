@@ -23,19 +23,17 @@
  */
 package org.spout.droplet.broadcast.command;
 
-import java.util.logging.Level;
-
 import org.spout.api.Spout;
-import org.spout.api.chat.ChatArguments;
-import org.spout.api.command.CommandContext;
+import org.spout.api.command.CommandArguments;
 import org.spout.api.command.CommandSource;
 import org.spout.api.command.annotated.Command;
-import org.spout.api.command.annotated.CommandPermissions;
+import org.spout.api.command.annotated.Permissible;
 import org.spout.api.exception.CommandException;
 import org.spout.api.exception.ConfigurationException;
-
 import org.spout.droplet.broadcast.DropletBroadcast;
 import org.spout.droplet.broadcast.config.DropletConfig;
+
+import java.util.logging.Level;
 
 /**
  * All subcommands go in this class.
@@ -50,8 +48,8 @@ public class DropletCommands {
 	}
 
 	@Command(aliases = {"reload"}, usage = "", desc = "Reload the droplet configuration.")
-	@CommandPermissions("droplet.command.reload")
-	public void reload(CommandContext args, CommandSource source) throws CommandException {
+	@Permissible("droplet.command.reload")
+	public void reload(CommandSource source, CommandArguments args) throws CommandException {
 		// Load the config again.
 		try {
 			plugin.getConfig().load();
@@ -61,36 +59,35 @@ public class DropletCommands {
 	}
 
 	@Command(aliases = {"addmessage", "addm"}, usage = "<message>", desc = "Add a new message to show to players.")
-	@CommandPermissions("droplet.command.addmessage")
-	public void addmessage(CommandContext args, CommandSource source) {
-		String message = args.getString(0);
-		ChatArguments chat = ChatArguments.fromString(message);
+	@Permissible("droplet.command.addmessage")
+	public void addmessage(CommandSource source, CommandArguments args) throws CommandException {
+        String message = args.getString(0);
+		//ChatArguments chat = ChatArguments.fromString(message);
 		// Make sure we don't add the same message twice...
 		for (String s : DropletConfig.MESSAGES.getStringList()) {
 			if (s.equalsIgnoreCase(message)) {
-				source.sendMessage(new ChatArguments("\"", chat, "\" has already been added."));
+				source.sendMessage("\"" + message + "\" has already been added.");
 				break;
 			}
 		}
 
 		DropletConfig.MESSAGES.getStringList().add(message);
-		source.sendMessage(new ChatArguments("\"", chat, "\" was added to the messages list."));
+		source.sendMessage("\"" + message + "\" was added to the messages list.");
 	}
 
 	@Command(aliases = {"removemessage", "remme"}, usage = "<message>", desc = "Removes a message from the messages available.")
-	@CommandPermissions("droplet.command.removemessage")
-	public void removemessage(CommandContext args, CommandSource source) {
-		String message = args.getString(0);
-		ChatArguments chat = ChatArguments.fromString(message);
+	@Permissible("droplet.command.removemessage")
+	public void removemessage(CommandSource source, CommandArguments args) throws CommandException {
+        String message = args.getString(0);
 		// Search for the message to be removed.
 		for (String s : DropletConfig.MESSAGES.getStringList()) {
 			if (s.equalsIgnoreCase(message)) {
 				DropletConfig.MESSAGES.getStringList().remove(message);
-				source.sendMessage(new ChatArguments("\"", chat, "\" was removed from the messages list."));
+				source.sendMessage("\"" + message + "\" was removed from the messages list.");
 				return;
 			}
 		}
 		// No messages found :'(
-		source.sendMessage(new ChatArguments("\"", chat, "\" was not found in the messages list!"));
+		source.sendMessage("\"" + message + "\" was not found in the messages list!");
 	}
 }

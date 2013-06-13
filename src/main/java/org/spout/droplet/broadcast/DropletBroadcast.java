@@ -23,23 +23,18 @@
  */
 package org.spout.droplet.broadcast;
 
-import java.util.logging.Level;
-
 import org.spout.api.Server;
-import org.spout.api.chat.ChatArguments;
-import org.spout.api.command.CommandRegistrationsFactory;
-import org.spout.api.command.annotated.AnnotatedCommandRegistrationFactory;
-import org.spout.api.command.annotated.SimpleAnnotatedCommandExecutorFactory;
-import org.spout.api.command.annotated.SimpleInjector;
+import org.spout.api.command.annotated.AnnotatedCommandExecutorFactory;
 import org.spout.api.entity.Player;
 import org.spout.api.exception.ConfigurationException;
-import org.spout.api.plugin.CommonPlugin;
+import org.spout.api.plugin.Plugin;
 import org.spout.api.scheduler.TaskPriority;
-
-import org.spout.droplet.broadcast.command.DropletCommand;
+import org.spout.droplet.broadcast.command.DropletCommands;
 import org.spout.droplet.broadcast.config.DropletConfig;
 
-public class DropletBroadcast extends CommonPlugin {
+import java.util.logging.Level;
+
+public class DropletBroadcast extends Plugin {
 	private DropletConfig config;
 	private Server server;
 
@@ -58,8 +53,9 @@ public class DropletBroadcast extends CommonPlugin {
 		}
 
 		// Register commands
-		CommandRegistrationsFactory<Class<?>> commandRegFactory = new AnnotatedCommandRegistrationFactory(new SimpleInjector(this), new SimpleAnnotatedCommandExecutorFactory());
-		server.getRootCommand().addSubCommands(this, DropletCommand.class, commandRegFactory);
+        //CommandRegistrationsFactory<Class<?>> commandRegFactory = new AnnotatedCommandRegistrationFactory(new SimpleInjector(this), new SimpleAnnotatedCommandExecutorFactory());
+		//server.getRootCommand().addSubCommands(this, DropletCommand.class, commandRegFactory);
+        AnnotatedCommandExecutorFactory.create(new DropletCommands(this), engine.getCommandManager().getCommand("droplet"));
 
 		server.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
 			@Override
@@ -71,7 +67,7 @@ public class DropletBroadcast extends CommonPlugin {
 				}
 				for (Player plr : onlinePlayers) {
 					for (String str : DropletConfig.MESSAGES.getStringList()) {
-						plr.sendMessage(new ChatArguments(str));
+						plr.sendMessage(str);
 					}
 				}
 			}
