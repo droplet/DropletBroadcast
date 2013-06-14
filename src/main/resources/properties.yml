@@ -1,10 +1,9 @@
-name: DropletBroadcast
-version: ${releaseVersion} b${buildNumber}
+name: ${project.name}
+version: ${project.version}-b${buildNumber}
+description: ${project.description}
+website: ${project.url}
+author: ${project.organization.name}
 
-description: Chat broadcast "Droplet" plugin for the Spout platform to demonstrate the usage of the scheduler for broadcasting messages.
-author: Spout LLC
-website: http://www.spout.org
-
-main: org.spout.droplet.broadcast.DropletBroadcast
-platform: SERVER
-reload: true
+main: ${project.groupId}.${project.artifactId}.${project.name}
+platform: ${platform}
+reload: ${reload}
