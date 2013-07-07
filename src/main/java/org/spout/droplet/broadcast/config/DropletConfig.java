@@ -26,10 +26,10 @@ package org.spout.droplet.broadcast.config;
 import java.io.File;
 import java.util.Arrays;
 
-import org.spout.api.exception.ConfigurationException;
-import org.spout.api.util.config.ConfigurationHolder;
-import org.spout.api.util.config.ConfigurationHolderConfiguration;
-import org.spout.api.util.config.yaml.YamlConfiguration;
+import org.spout.cereal.config.ConfigurationException;
+import org.spout.cereal.config.ConfigurationHolder;
+import org.spout.cereal.config.ConfigurationHolderConfiguration;
+import org.spout.cereal.config.yaml.YamlConfiguration;
 
 public class DropletConfig extends ConfigurationHolderConfiguration {
 	public static final ConfigurationHolder DELAY = new ConfigurationHolder(20, "general", "seconds-initial-delay");
